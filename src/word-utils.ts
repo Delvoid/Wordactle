@@ -6,9 +6,12 @@ export enum LetterState {
   Match,
 }
 
+const word = getRandomWord()
+console.log(word)
+
 export const computeGuess = (
   guess: string,
-  answerString: string
+  answerString: string = word
 ): LetterState[] => {
   const result: LetterState[] = []
 
@@ -59,7 +62,7 @@ export const computeGuess = (
   return result
 }
 
-export const getRandomWord = () => {
+export function getRandomWord() {
   return wordBank.valid[Math.floor(Math.random() * wordBank.valid.length)]
 }
 
