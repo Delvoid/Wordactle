@@ -1,13 +1,82 @@
-import { describe, expect, test } from 'vitest';
-import App from '../App';
-import { render, screen, userEvent, within } from './test-utils';
-import {getRandomWord} from '../word-utils';
-
+import { describe, expect, test } from 'vitest'
+import App from '../App'
+import { render, screen, userEvent, within } from './test-utils'
+import {
+  getRandomWord,
+  computeGuess,
+  LetterState,
+  isValidWord,
+} from '../word-utils'
 
 describe('Word utils', () => {
   it('returns a random valid word', () => {
     expect(getRandomWord()).toEqual(expect.any(String))
     expect(getRandomWord().length).toEqual(5)
-    
-  });
-});
+  })
+})
+
+describe('computeGuess', () => {
+  test('works with match and presents', () => {
+    expect(computeGuess('boost', 'basic')).toEqual([
+      LetterState.Match,
+      LetterState.Miss,
+      LetterState.Miss,
+      LetterState.Present,
+      LetterState.Miss,
+    ])
+  })
+
+  test('full match', () => {
+    expect(computeGuess('boost', 'boost')).toEqual([
+      LetterState.Match,
+      LetterState.Match,
+      LetterState.Match,
+      LetterState.Match,
+      LetterState.Match,
+    ])
+  })
+
+  test('full miss', () => {
+    expect(computeGuess('guard', 'boost')).toEqual([
+      LetterState.Miss,
+      LetterState.Miss,
+      LetterState.Miss,
+      LetterState.Miss,
+      LetterState.Miss,
+    ])
+  })
+
+  test('only does one match when two letters exist', () => {
+    expect(computeGuess('solid', 'boost')).toEqual([
+      LetterState.Present,
+      LetterState.Match,
+      LetterState.Miss,
+      LetterState.Miss,
+      LetterState.Miss,
+    ])
+  })
+
+  test('returns empty array when given incomplete guess', () => {
+    expect(computeGuess('so', 'boost')).toEqual([])
+  })
+
+  test('when 2 letters are present but answer has only 1 of those letters', () => {
+    expect(computeGuess('allol', 'smelt')).toEqual([
+      LetterState.Miss,
+      LetterState.Present,
+      LetterState.Miss,
+      LetterState.Miss,
+      LetterState.Miss,
+    ])
+  })
+
+  test('when 1 letter matches but guess has more of the same letter', () => {
+    expect(computeGuess('allol', 'colon')).toEqual([
+      LetterState.Miss,
+      LetterState.Miss,
+      LetterState.Match,
+      LetterState.Match,
+      LetterState.Miss,
+    ])
+  })
+})
