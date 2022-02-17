@@ -4,16 +4,20 @@ import { LETTER_LENGTH } from './word-utils'
 
 interface WordRowProps {
   letters: string
+  className?: string
 }
 
-const WordRow = ({ letters: lettersProp = '' }: WordRowProps) => {
+const WordRow = ({
+  letters: lettersProp = '',
+  className = '',
+}: WordRowProps) => {
   const answer = useStore((state) => state.answer)
   const lettersRemaining = LETTER_LENGTH - lettersProp.length
   const letters = lettersProp.split('').concat(Array(lettersRemaining).fill(''))
 
   const guessStates = computeGuess(lettersProp, answer)
   return (
-    <div className="grid grid-cols-5 gap-4">
+    <div className={`grid grid-cols-5 gap-4 ${className}`}>
       {letters.map((char, index) => (
         <CharacterBox key={index} value={char} state={guessStates[index]} />
       ))}

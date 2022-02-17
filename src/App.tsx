@@ -19,6 +19,8 @@ const App = () => {
 
   rows = rows.concat(Array(numberOfGuessesRemaining).fill(''))
 
+  const isGameOver = state.guesses.length === GUESS_LENGTH
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newGuess = e.target.value
     if (newGuess.length === LETTER_LENGTH) {
@@ -31,7 +33,7 @@ const App = () => {
   }
 
   return (
-    <div className="mx-auto w-96">
+    <div className="mx-auto w-96 relative">
       <header className="border-b border-gray-500 pb-2 my-2">
         <h1 className="text-4xl text-center">Reacdle</h1>
         <div>
@@ -40,6 +42,7 @@ const App = () => {
             className="w-1/2 p-2 border-2 border-gray-500"
             value={guess}
             onChange={onChange}
+            disabled={isGameOver}
           />
         </div>
       </header>
@@ -49,6 +52,29 @@ const App = () => {
           <WordRow key={index} letters={word} />
         ))}
       </main>
+      {isGameOver && (
+        <div
+          role="modal"
+          className="absolute bg-white border border-gray-500 rounded text-center
+            w-11/12 h-1/2 p-6 left-0 right-0 mx-auto top-1/4
+           grid grid-rows-4"
+        >
+          <p>Game Over</p>
+          <WordRow
+            letters={state.answer}
+            className="items-center justify-items-center"
+          />
+          <button
+            className="border border-green-500 rounded bg-green-500 p-2 mt-4 text-gray-800 shadow"
+            onClick={() => {
+              state.newGame()
+              setGuess('')
+            }}
+          >
+            New Game
+          </button>
+        </div>
+      )}
     </div>
   )
 }
