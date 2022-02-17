@@ -1,5 +1,7 @@
 import wordBank from './word-bank.json'
 
+export const LETTER_LENGTH = 5
+
 export enum LetterState {
   Miss,
   Present,
@@ -7,11 +9,10 @@ export enum LetterState {
 }
 
 const word = getRandomWord()
-console.log(word)
 
 export const computeGuess = (
   guess: string,
-  answerString: string = word
+  answerString: string
 ): LetterState[] => {
   const result: LetterState[] = []
 
