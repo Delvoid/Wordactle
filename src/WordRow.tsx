@@ -36,11 +36,11 @@ const CharacterBox = ({ value, state }: CharacterBoxProps) => {
       ? 'border-gray-500 text-black'
       : `${characterStateStyles[state]} text-white`
   return (
-    <div
+    <span
       className={`border-2 p-2 uppercase text-center font-extrabold text-4xl before:inline-block before:content-['_'] ${stateStyles} `}
     >
       {value}
-    </div>
+    </span>
   )
 }
 
