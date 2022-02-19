@@ -12,25 +12,31 @@ interface GuessRow {
 
 interface StoreState {
   answer: string
-  guesses: string[]
+  rows: GuessRow[]
   addGuess: (guess: string) => void
   newGame: () => void
 }
 
 export const useStore = create<StoreState>(
   persist(
-    (set) => ({
+    (set, get) => ({
       answer: getRandomWord(),
-      guesses: ['hello', 'solar', 'penny'],
+      rows: [],
       addGuess: (guess: string) => {
         set((state) => ({
-          guesses: [...state.guesses, guess],
+          rows: [
+            ...state.rows,
+            {
+              guess,
+              result: computeGuess(guess, state.answer),
+            },
+          ],
         }))
       },
       newGame: () => {
         set({
           answer: getRandomWord(),
-          guesses: [],
+          rows: [],
         })
       },
     }),
