@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useStore } from './store'
+import { useStore, GUESS_LENGTH } from './store'
 import WordRow from './WordRow'
 import { LETTER_LENGTH } from './word-utils'
-
-const GUESS_LENGTH = 6
 
 const App = () => {
   const state = useStore()
@@ -19,7 +17,7 @@ const App = () => {
 
   rows = rows.concat(Array(numberOfGuessesRemaining).fill(''))
 
-  const isGameOver = state.rows.length === GUESS_LENGTH
+  const isGameOver = state.gameState !== 'playing'
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newGuess = e.target.value
