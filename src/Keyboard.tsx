@@ -7,7 +7,6 @@ const Keyboard = ({
   onClick: (letter: string) => void
 }) => {
   const keyboardLetterState = useStore((s) => s.keyboardLetterState)
-  console.log(keyboardLetterState)
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { textContent, innerHTML } = e.currentTarget
 
@@ -39,7 +38,7 @@ const Keyboard = ({
             }
             return (
               <button onClick={onClick} key={key + index} className={styles}>
-                {key === 'delete' ? backspace : key}
+                {key === 'Backspace' ? backspace : key}
               </button>
             )
           })}
