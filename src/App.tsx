@@ -49,12 +49,8 @@ const App = () => {
       <header className="border-b border-gray-500 pb-2 my-2">
         <h1 className="text-4xl text-center">Reacdle</h1>
       </header>
-      <Keyboard
-        onClick={(letter) => {
-          addGuessLetter(letter)
-        }}
-      />
-      <main className="grid grid-rows-6 gap-4">
+
+      <main className="grid grid-rows-6 gap-4 mb-4">
         {rows.map(({ guess, result }, index) => (
           <WordRow
             key={index}
@@ -66,6 +62,13 @@ const App = () => {
           />
         ))}
       </main>
+
+      <Keyboard
+        onClick={(letter) => {
+          addGuessLetter(letter)
+        }}
+      />
+
       {isGameOver && (
         <div
           role="modal"

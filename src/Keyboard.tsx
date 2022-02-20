@@ -6,6 +6,8 @@ const Keyboard = ({
 }: {
   onClick: (letter: string) => void
 }) => {
+  const keyboardLetterState = useStore((s) => s.keyboardLetterState)
+  console.log(keyboardLetterState)
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { textContent, innerHTML } = e.currentTarget
 
@@ -22,10 +24,18 @@ const Keyboard = ({
         <div key={rowIndex} className="my-2 flex justify-center space-x-1">
           {keyboardRow.map((key, index) => {
             let styles = 'rounded font-bold uppercase flex-1 py-2'
+            const letterState = keyStateStyles[keyboardLetterState[key]]
+
+            if (letterState) {
+              styles += ' text-white px-1 ' + letterState
+            } else if (key !== '') {
+              styles += ' bg-gray-400'
+            }
+
             if (key === '') {
               styles += ' pointer-events-none'
             } else {
-              styles += ' bg-gray-400 px-1'
+              styles += ' px-1'
             }
             return (
               <button onClick={onClick} key={key + index} className={styles}>
@@ -61,5 +71,11 @@ const backspace = (
     ></path>
   </svg>
 )
+
+const keyStateStyles = {
+  [LetterState.Miss]: 'bg-gray-600',
+  [LetterState.Present]: 'bg-yellow-500',
+  [LetterState.Match]: 'bg-green-500',
+}
 
 export default Keyboard
