@@ -1,9 +1,20 @@
 import { useStore } from './store'
 import { LetterState } from './word-utils'
 
-const Keyboard = () => {
+const Keyboard = ({
+  onClick: onClickProps,
+}: {
+  onClick: (letter: string) => void
+}) => {
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(e)
+    const { textContent, innerHTML } = e.currentTarget
+
+    let returnProps = textContent!
+    if (textContent !== innerHTML) {
+      returnProps = 'Backspace'
+    }
+
+    onClickProps(returnProps)
   }
   return (
     <div className="flex flex-col">

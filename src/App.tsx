@@ -6,10 +6,11 @@ import Keyboard from './Keyboard'
 
 const App = () => {
   const state = useStore()
-  const [guess, setGuess] = useGuess()
+  const [guess, setGuess, addGuessLetter] = useGuess()
   const addGuess = useStore((s) => s.addGuess)
   const prevGuess = usePrevious(guess)
   const [showInvalidGuess, setInvalidGuess] = useState(false)
+
   useEffect(() => {
     let id: NodeJS.Timeout
     if (showInvalidGuess) {
@@ -32,7 +33,6 @@ const App = () => {
   }, [guess])
 
   let rows = [...state.rows]
-
   let currentRow = 0
   if (rows.length < GUESS_LENGTH) {
     currentRow = rows.push({ guess }) - 1
@@ -49,7 +49,11 @@ const App = () => {
       <header className="border-b border-gray-500 pb-2 my-2">
         <h1 className="text-4xl text-center">Reacdle</h1>
       </header>
-      <Keyboard />
+      <Keyboard
+        onClick={(letter) => {
+          addGuessLetter(letter)
+        }}
+      />
       <main className="grid grid-rows-6 gap-4">
         {rows.map(({ guess, result }, index) => (
           <WordRow
@@ -89,11 +93,14 @@ const App = () => {
   )
 }
 
-function useGuess(): [string, React.Dispatch<React.SetStateAction<string>>] {
+function useGuess(): [
+  string,
+  React.Dispatch<React.SetStateAction<string>>,
+  (letter: string) => void
+] {
   const [guess, setGuess] = useState('')
 
-  const onKeyDown = (e: KeyboardEvent) => {
-    let letter = e.key
+  const addGuessLetter = (letter: string) => {
     setGuess((currGuess) => {
       const newGuess =
         letter.length === 1 && currGuess.length !== LETTER_LENGTH
@@ -113,6 +120,11 @@ function useGuess(): [string, React.Dispatch<React.SetStateAction<string>>] {
     })
   }
 
+  const onKeyDown = (e: KeyboardEvent) => {
+    let letter = e.key
+    addGuessLetter(letter)
+  }
+
   useEffect(() => {
     document.addEventListener('keydown', onKeyDown)
 
@@ -121,7 +133,7 @@ function useGuess(): [string, React.Dispatch<React.SetStateAction<string>>] {
     }
   })
 
-  return [guess, setGuess]
+  return [guess, setGuess, addGuessLetter]
 }
 
 // source https://usehooks.com/usePrevious/
