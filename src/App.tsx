@@ -76,7 +76,7 @@ const App = () => {
             w-11/12 h-1/2 p-6 left-0 right-0 mx-auto top-1/4
            grid grid-rows-4"
         >
-          <p>Game Over</p>
+          <p>{state.gameState === 'won' ? 'Game Won' : 'Game Over'}</p>
           <WordRow
             letters={state.answer}
             className="items-center justify-items-center"

@@ -35,7 +35,7 @@ describe('Simple test', () => {
     const answer = useStore.getState().answer
     useStore.getState().addGuess(answer)
     render(<App />)
-    expect(screen.queryByText('Game Over')).toBeInTheDocument()
+    expect(screen.queryByText('Game Won')).toBeInTheDocument()
   })
   it('can start a new game', () => {
     useStore.getState().newGame(Array(6).fill('react'))
