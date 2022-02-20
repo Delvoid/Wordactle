@@ -56,6 +56,7 @@ const App = () => {
             key={index}
             letters={guess}
             result={result}
+            invalidWord={showInvalidGuess && index === currentRow}
             className={
               showInvalidGuess && index === currentRow ? 'animate-bounce' : ''
             }
@@ -73,13 +74,16 @@ const App = () => {
         <div
           role="modal"
           className="absolute bg-white border border-gray-500 rounded text-center
-            w-11/12 h-1/2 p-6 left-0 right-0 mx-auto top-1/4
-           grid grid-rows-4"
+            w-11/12  p-6 left-0 right-0 mx-auto top-1/4
+           grid grid-rows-3"
         >
-          <p>{state.gameState === 'won' ? 'Game Won' : 'Game Over'}</p>
+          <p className="text-xl font-bold">
+            {state.gameState === 'won' ? 'Game Won' : 'Game Over'}
+          </p>
           <WordRow
             letters={state.answer}
             className="items-center justify-items-center"
+            invalidWord={showInvalidGuess}
           />
           <button
             className="border border-green-500 rounded bg-green-500 p-2 mt-4 text-gray-800 shadow"
@@ -90,6 +94,16 @@ const App = () => {
           >
             New Game
           </button>
+        </div>
+      )}
+      {showInvalidGuess && (
+        <div
+          role="modal"
+          className="absolute bg-white border border-red-500 rounded text-center
+            w-10/12  p-4 left-0 right-0 mx-auto top-1/4
+           grid grid-rows-1"
+        >
+          <p className=" text-xl font-bold">Invalid word!</p>
         </div>
       )}
     </div>
