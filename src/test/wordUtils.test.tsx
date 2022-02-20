@@ -80,3 +80,13 @@ describe('computeGuess', () => {
     ])
   })
 })
+
+describe('isValidWord', () => {
+  test('with valid word', () => {
+    expect(isValidWord('boost')).toBe(true)
+  })
+
+  test('with invalid word', () => {
+    expect(isValidWord('lulze')).toBe(false)
+  })
+})
