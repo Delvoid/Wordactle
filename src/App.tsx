@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useStore, GUESS_LENGTH } from './store'
 import WordRow from './WordRow'
 import { isValidWord, LETTER_LENGTH } from './word-utils'
+import Keyboard from './Keyboard'
 
 const App = () => {
   const state = useStore()
@@ -48,7 +49,7 @@ const App = () => {
       <header className="border-b border-gray-500 pb-2 my-2">
         <h1 className="text-4xl text-center">Reacdle</h1>
       </header>
-
+      <Keyboard />
       <main className="grid grid-rows-6 gap-4">
         {rows.map(({ guess, result }, index) => (
           <WordRow
