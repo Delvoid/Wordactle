@@ -11,6 +11,7 @@ const App = () => {
   const prevGuess = usePrevious(guess)
   const [showInvalidGuess, setInvalidGuess] = useState(false)
   const [checkingGuess, setCheckingGuess] = useState(false)
+  const [canType, setCanType] = useState(true)
 
   useEffect(() => {
     let id: NodeJS.Timeout
@@ -24,17 +25,23 @@ const App = () => {
   useEffect(() => {
     let id: NodeJS.Timeout
     if (checkingGuess) {
-      id = setTimeout(() => setCheckingGuess(false), 1500)
+      id = setTimeout(() => {
+        setCheckingGuess(false)
+        setCanType(true)
+      }, 1500)
     }
-
     return () => clearTimeout(id)
   }, [checkingGuess])
 
   useEffect(() => {
     if (guess.length == 0 && prevGuess?.length === LETTER_LENGTH) {
+      if (!canType) {
+        return setGuess(prevGuess)
+      }
       if (isValidWord(prevGuess)) {
         addGuess(prevGuess)
         setCheckingGuess(true)
+        setCanType(false)
         setInvalidGuess(false)
       } else {
         setInvalidGuess(true)
@@ -78,7 +85,9 @@ const App = () => {
 
       <Keyboard
         onClick={(letter) => {
-          addGuessLetter(letter)
+          if (canType) {
+            addGuessLetter(letter)
+          }
         }}
       />
 
