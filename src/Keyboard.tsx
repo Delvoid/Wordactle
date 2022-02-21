@@ -28,7 +28,7 @@ const Keyboard = ({
             if (letterState) {
               styles += ' text-white px-1 ' + letterState
             } else if (key !== '') {
-              styles += ' bg-gray-400'
+              styles += ' bg-zinc-300'
             }
 
             if (key === '') {
@@ -73,8 +73,8 @@ const backspace = (
 
 const keyStateStyles = {
   [LetterState.Miss]: 'bg-gray-600',
-  [LetterState.Present]: 'bg-yellow-500',
-  [LetterState.Match]: 'bg-green-500',
+  [LetterState.Present]: 'bg-amber-400',
+  [LetterState.Match]: 'bg-emerald-400',
 }
 
 export default Keyboard

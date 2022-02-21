@@ -20,7 +20,7 @@ const WordRow = ({
   const letters = lettersProp.split('').concat(Array(lettersRemaining).fill(''))
 
   return (
-    <div className={`grid grid-cols-5 gap-4 ${className}`}>
+    <div className={`grid grid-cols-5 gap-2 ${className}`}>
       {letters.map((char, index) => (
         <CharacterBox
           key={index}
@@ -82,9 +82,9 @@ const CharacterBox = ({
 
   let stateStyles = showStyles
     ? state == null
-      ? 'border-gray-500 text-black'
+      ? ' text-white'
       : `${characterStateStyles[state]} text-white`
-    : 'border-gray-500 text-black'
+    : 'border-zinc-300 text-white'
   if (invalidWord) {
     stateStyles += ' border-red-500'
   }
@@ -99,9 +99,9 @@ const CharacterBox = ({
 }
 
 const characterStateStyles = {
-  [LetterState.Miss]: 'border-gray-500 bg-gray-500',
-  [LetterState.Present]: 'border-yellow-500 bg-yellow-500',
-  [LetterState.Match]: 'border-green-500 bg-green-500',
+  [LetterState.Miss]: 'border-zinc-400 bg-zinc-400',
+  [LetterState.Present]: 'border-amber-400 bg-amber-400',
+  [LetterState.Match]: 'border-emerald-400 bg-emerald-400',
 }
 
 export default WordRow

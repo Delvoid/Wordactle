@@ -64,11 +64,11 @@ const App = () => {
 
   return (
     <div className="mx-auto w-96 relative">
-      <header className="border-b border-gray-500 pb-2 my-2">
-        <h1 className="text-4xl text-center">Wordactle</h1>
+      <header className="border-b border-gray-300 pb-2 my-2 mb-4">
+        <h1 className="text-6xl text-center text-white ">Wordactle</h1>
       </header>
 
-      <main className="grid grid-rows-6 gap-4 mb-4">
+      <main className="grid grid-rows-6 gap-2 mb-4">
         {rows.map(({ guess, result }, index) => (
           <WordRow
             key={index}
@@ -94,11 +94,15 @@ const App = () => {
       {isGameOver && !checkingGuess && (
         <div
           role="modal"
-          className="absolute bg-white border border-gray-500 rounded text-center
+          className="absolute bg-gradient-to-r from-blue-600 via-blue-700 to-blue-600 border border-blue-600 shadow-xl rounded text-center
             w-11/12  p-6 left-0 right-0 mx-auto top-1/4
            grid grid-rows-3"
         >
-          <p className="text-xl font-bold">
+          <p
+            className={`text-xl font-bold ${
+              state.gameState === 'won' ? ' text-emerald-500' : ' text-red-500'
+            }`}
+          >
             {state.gameState === 'won' ? 'Game Won' : 'Game Over'}
           </p>
           <WordRow
@@ -107,7 +111,7 @@ const App = () => {
             invalidWord={showInvalidGuess}
           />
           <button
-            className="border border-green-500 rounded bg-green-500 p-2 mt-4 text-gray-800 shadow"
+            className="border border-emerald-500 rounded bg-emerald-500 p-2 mt-4 text-white shadow"
             onClick={() => {
               state.newGame()
               setGuess('')
@@ -120,7 +124,7 @@ const App = () => {
       {showInvalidGuess && (
         <div
           role="modal"
-          className="absolute bg-white border border-red-500 rounded text-center
+          className="absolute text-white bg-red-400  shadow-xl border border-red-500 rounded text-center
             w-10/12  p-4 left-0 right-0 mx-auto top-1/4
            grid grid-rows-1"
         >
