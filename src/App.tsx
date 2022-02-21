@@ -10,6 +10,7 @@ const App = () => {
   const addGuess = useStore((s) => s.addGuess)
   const prevGuess = usePrevious(guess)
   const [showInvalidGuess, setInvalidGuess] = useState(false)
+  const [checkingGuess, setCheckingGuess] = useState(false)
 
   useEffect(() => {
     let id: NodeJS.Timeout
@@ -21,9 +22,19 @@ const App = () => {
   }, [showInvalidGuess])
 
   useEffect(() => {
+    let id: NodeJS.Timeout
+    if (checkingGuess) {
+      id = setTimeout(() => setCheckingGuess(false), 1500)
+    }
+
+    return () => clearTimeout(id)
+  }, [checkingGuess])
+
+  useEffect(() => {
     if (guess.length == 0 && prevGuess?.length === LETTER_LENGTH) {
       if (isValidWord(prevGuess)) {
         addGuess(prevGuess)
+        setCheckingGuess(true)
         setInvalidGuess(false)
       } else {
         setInvalidGuess(true)
@@ -47,7 +58,7 @@ const App = () => {
   return (
     <div className="mx-auto w-96 relative">
       <header className="border-b border-gray-500 pb-2 my-2">
-        <h1 className="text-4xl text-center">Reacdle</h1>
+        <h1 className="text-4xl text-center">Wordactle</h1>
       </header>
 
       <main className="grid grid-rows-6 gap-4 mb-4">
@@ -57,6 +68,7 @@ const App = () => {
             letters={guess}
             result={result}
             invalidWord={showInvalidGuess && index === currentRow}
+            checkingGuess={checkingGuess && index === currentRow - 1}
             className={
               showInvalidGuess && index === currentRow ? 'animate-bounce' : ''
             }
@@ -70,7 +82,7 @@ const App = () => {
         }}
       />
 
-      {isGameOver && (
+      {isGameOver && !checkingGuess && (
         <div
           role="modal"
           className="absolute bg-white border border-gray-500 rounded text-center
