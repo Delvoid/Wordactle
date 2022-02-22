@@ -10,7 +10,7 @@
     A react wordle clone
     <br />
     <br />
-    <a href="https://github.com/Delvoid/Wordactle">View Demo</a>
+    <a href="https://wordactle.netlify.app/">View Demo</a>
     ·
     <a href="https://github.com/Delvoid/Wordactle/issues">Report Bug</a>
     ·
@@ -43,6 +43,6 @@ Wordactle is a wordle clone created using react and vitest for testing
 
 Delvoid - [@delvoid](https://twitter.com/delvoid)
 
-Project Link: [https://github.com/Delvoid/Wordactle](https://github.com/Delvoid/Wordactle)
+Project Demo Link: [https://wordactle.netlify.app/](https://wordactle.netlify.app/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
