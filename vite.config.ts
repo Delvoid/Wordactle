@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/wordle/',
+  base: '/dist/',
   plugins: [react()],
   // @ts-expect-error
   test: {
